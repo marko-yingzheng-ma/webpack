@@ -8,4 +8,4 @@ const sum = (a, b) => a + b;
  *  ES2015 (es6)  |   export, import
  */
 
- module.exports = sum;
+export default sum;
