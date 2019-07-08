@@ -12,7 +12,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
  *  style-loader          |   Takes the CSS imports (content) and adds them to the HTML document under <style> tag.
  *                        |
  *  image-webpack-loader  |   compress the image
- *  url-loader            |   look at the compressed image, and if it's small, include it in bundle as raw, if it's big, include the raw image in the output directory 
+ *  url-loader            |   look at the compressed image, and if it's small than limit, include it in bundle as raw, base64 URIs, if it's big, file-loader is used to include the image in the build directory,
+ *                            and replace the original asset import url with new url (e.g e26a49023a771b66c33b0604f567de49.jgp and prepend publicPath, e,g, build/ to it)
  */
 
  
@@ -30,7 +31,8 @@ const config = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: 'build/'
   },
   module: {
     rules: [
@@ -57,7 +59,7 @@ const config = {
           'image-webpack-loader'
         ],
         test: /\.(jpe?g|png|gif|svg)$/
-      }
+      } 
     ]
   },
   plugins: [
