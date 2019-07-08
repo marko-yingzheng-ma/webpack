@@ -2,14 +2,17 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 /**
- *    Module        |   Purpose
- *  ----------------|---------------
- *  babel-loader    |   Teaches babel how to work with webpack
- *  babel-core      |   Knows how to take in code, parse it, and generate some output files
- *  babel-preset-env|   Ruleset for telling babel exactly what pieces of ES6/7/8 syntax to look for, and how to turn it into ES5 code
- * 
- *  css-loader      |   Knows how to deal with CSS imports (open the file and read the content).
- *  style-loader    |   Takes the CSS imports (content) and adds them to the HTML document under <style> tag.
+ *    Module              |   Purpose
+ *  ----------------------|---------------
+ *  babel-loader          |   Teaches babel how to work with webpack
+ *  babel-core            |   Knows how to take in code, parse it, and generate some output files
+ *  babel-preset-env      |   Ruleset for telling babel exactly what pieces of ES6/7/8 syntax to look for, and how to turn it into ES5 code
+ *                        |
+ *  css-loader            |   Knows how to deal with CSS imports (open the file and read the content).
+ *  style-loader          |   Takes the CSS imports (content) and adds them to the HTML document under <style> tag.
+ *                        |
+ *  image-webpack-loader  |   compress the image
+ *  url-loader            |   look at the compressed image, and if it's small, include it in bundle as raw, if it's big, include the raw image in the output directory 
  */
 
  
@@ -44,6 +47,16 @@ const config = {
           'css-loader'
         ],
         test: /\.css$/
+      },
+      { 
+        use: [
+          {
+            loader: 'url-loader',
+            options: { limit: 40000 } // 40kb
+          },
+          'image-webpack-loader'
+        ],
+        test: /\.(jpe?g|png|gif|svg)$/
       }
     ]
   },
